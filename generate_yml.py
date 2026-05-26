@@ -106,10 +106,13 @@ for item in products:
 
 tree = ET.ElementTree(root)
 
+ET.indent(tree, space="  ", level=0)
+
 tree.write(
-    "feed.yml",
+    "feed.xml",
     encoding="utf-8",
-    xml_declaration=True
+    xml_declaration=True,
+    method="xml"
 )
 
 print("feed.yml generated")
