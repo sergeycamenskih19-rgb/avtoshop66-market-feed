@@ -1,30 +1,19 @@
-```python id="k9x7q2"
 import os
-import requests
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
-# ====================================
 # API KEYS
-# ====================================
-
 API_KEY1 = os.getenv("API_KEY1")
 API_KEY2 = os.getenv("API_KEY2")
 
-# ====================================
 # НАСТРОЙКИ
-# ====================================
-
 SHOP_NAME = "AvtoShop66"
 SHOP_URL = "https://automotix.ru"
 
 # Наценка +400%
 MARKUP = 5
 
-# ====================================
-# ROOT XML
-# ====================================
-
+# XML ROOT
 root = ET.Element("yml_catalog")
 root.set("date", datetime.now().strftime("%Y-%m-%d %H:%M"))
 
@@ -34,36 +23,22 @@ ET.SubElement(shop, "name").text = SHOP_NAME
 ET.SubElement(shop, "company").text = SHOP_NAME
 ET.SubElement(shop, "url").text = SHOP_URL
 
-# ====================================
-# CURRENCIES
-# ====================================
-
+# Валюты
 currencies = ET.SubElement(shop, "currencies")
 
 currency = ET.SubElement(currencies, "currency")
 currency.set("id", "RUR")
 currency.set("rate", "1")
 
-# ====================================
-# CATEGORIES
-# ====================================
-
+# Категории
 categories = ET.SubElement(shop, "categories")
 
 category = ET.SubElement(categories, "category")
 category.set("id", "1")
 category.text = "Автозапчасти"
 
-# ====================================
-# OFFERS
-# ====================================
-
+# Товары
 offers = ET.SubElement(shop, "offers")
-
-# ====================================
-# ТЕСТОВЫЕ ТОВАРЫ
-# (пока вместо Rossko)
-# ====================================
 
 products = [
     {
@@ -88,7 +63,6 @@ products = [
 
 for item in products:
 
-    # Наценка +400%
     final_price = int(item["price"] * MARKUP)
 
     offer = ET.SubElement(offers, "offer")
@@ -139,4 +113,3 @@ tree.write(
 )
 
 print("feed.yml generated")
-```
