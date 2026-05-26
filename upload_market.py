@@ -1,34 +1,25 @@
 import os
 import requests
 
-TOKEN = os.getenv("ACMA:LSxK4GcZmXVI8vVBE9c9RhRttqN1Qv6vCtMcLeFs:13e575ed")
-CAMPAIGN_ID = os.getenv("147507763")
+TOKEN = os.getenv("MARKET_API_KEY")
 
-url = f"https://api.partner.market.yandex.ru/businesses/{CAMPAIGN_ID}/offer-mappings/update"
+url = "https://api.partner.market.yandex.ru/campaigns"
 
 headers = {
-    "Api-Key": 5f11f103349aaf7a664cc9f9eaf89349,
-    "Content-Type": "application/json"
+    "Api-Key": TOKEN,
+    "Accept": "application/json",
+    "User-Agent": "Mozilla/5.0"
 }
 
-payload = {
-    "offerMappings": [
-        {
-            "offer": {
-                "shopSku": "TEST-001",
-                "name": "FEBEST Ступица колеса",
-                "category": "Автозапчасти",
-                "vendor": "FEBEST"
-            }
-        }
-    ]
-}
+try:
+    r = requests.get(
+        url,
+        headers=headers,
+        timeout=60
+    )
 
-r = requests.post(
-    url,
-    headers=headers,
-    json=payload
-)
+    print("STATUS:", r.status_code)
+    print(r.text)
 
-print(r.status_code)
-print(r.text)
+except Exception as e:
+    print("ERROR:", e)
