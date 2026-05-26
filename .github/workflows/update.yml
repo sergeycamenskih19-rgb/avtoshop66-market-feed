@@ -1,9 +1,8 @@
+```yaml
 name: Update YML Feed
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 */3 * * *'
 
 permissions:
   contents: write
@@ -15,30 +14,23 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          persist-credentials: true
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+          python-version: "3.11"
 
       - name: Generate feed
-        env:
-          API_KEY1: ${{ secrets.API_KEY1 }}
-          API_KEY2: ${{ secrets.API_KEY2 }}
         run: python generate_yml.py
 
-      - name: Commit and push
+      - name: Commit files
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
+          git config --local user.email "github-actions@github.com"
+          git config --local user.name "github-actions"
 
           git add feed.yml
 
-          git diff --staged --quiet || git commit -m "Auto update feed"
+          git diff --staged --quiet || git commit -m "Update feed"
 
           git push
+```
