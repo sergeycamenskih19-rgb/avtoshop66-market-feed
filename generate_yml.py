@@ -35,10 +35,17 @@ offer.set("available", "true")
 
 ET.SubElement(offer, "name").text = "Тестовый товар"
 ET.SubElement(offer, "vendor").text = "AvtoShop66"
-ET.SubElement(offer, "price").text = "9990"
+
 ET.SubElement(offer, "currencyId").text = "RUR"
 ET.SubElement(offer, "categoryId").text = "1"
+base_price = random.randint(1500, 25000)
 
+final_price = int(base_price * 5)
+
+ET.SubElement(
+    offer,
+    "price"
+).text = str(final_price)
 ET.SubElement(offer, "description").text = "Тестовая выгрузка"
 
 tree = ET.ElementTree(root)
