@@ -1,4 +1,4 @@
-name: Update YML Feed
+name: Build Feed
 
 on:
   workflow_dispatch:
@@ -7,11 +7,14 @@ permissions:
   contents: write
 
 jobs:
+
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -19,13 +22,21 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Generate feed
-        run: python generate_yml.py
+      - name: Install dependencies
+        run: |
+          pip install pandas
+          pip install openpyxl
 
-      - name: Commit feed
+      - name: Generate feed
+        run: python build_feed.py
+
+      - name: Commit files
         run: |
           git config --global user.name "github-actions"
           git config --global user.email "github-actions@github.com"
-          git add feed.xml
-          git diff --cached --quiet || git commit -m "Update feed"
+
+          git add .
+
+          git commit -m "update feed" || echo "no changes"
+
           git push
