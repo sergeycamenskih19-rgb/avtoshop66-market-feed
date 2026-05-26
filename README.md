@@ -1,0 +1,1 @@
+# avtoshop66-market-feed
