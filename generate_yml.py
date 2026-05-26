@@ -1,19 +1,42 @@
+```python id="k9x7q2"
 import os
 import requests
 import xml.etree.ElementTree as ET
 from datetime import datetime
 
+# ====================================
+# API KEYS
+# ====================================
+
 API_KEY1 = os.getenv("API_KEY1")
 API_KEY2 = os.getenv("API_KEY2")
+
+# ====================================
+# НАСТРОЙКИ
+# ====================================
+
+SHOP_NAME = "AvtoShop66"
+SHOP_URL = "https://automotix.ru"
+
+# Наценка +400%
+MARKUP = 5
+
+# ====================================
+# ROOT XML
+# ====================================
 
 root = ET.Element("yml_catalog")
 root.set("date", datetime.now().strftime("%Y-%m-%d %H:%M"))
 
 shop = ET.SubElement(root, "shop")
 
-ET.SubElement(shop, "name").text = "AvtoShop66"
-ET.SubElement(shop, "company").text = "AvtoShop66"
-ET.SubElement(shop, "url").text = "https://automotix.ru"
+ET.SubElement(shop, "name").text = SHOP_NAME
+ET.SubElement(shop, "company").text = SHOP_NAME
+ET.SubElement(shop, "url").text = SHOP_URL
+
+# ====================================
+# CURRENCIES
+# ====================================
 
 currencies = ET.SubElement(shop, "currencies")
 
@@ -21,32 +44,91 @@ currency = ET.SubElement(currencies, "currency")
 currency.set("id", "RUR")
 currency.set("rate", "1")
 
+# ====================================
+# CATEGORIES
+# ====================================
+
 categories = ET.SubElement(shop, "categories")
 
-cat = ET.SubElement(categories, "category")
-cat.set("id", "1")
-cat.text = "Автозапчасти"
+category = ET.SubElement(categories, "category")
+category.set("id", "1")
+category.text = "Автозапчасти"
+
+# ====================================
+# OFFERS
+# ====================================
 
 offers = ET.SubElement(shop, "offers")
 
-offer = ET.SubElement(offers, "offer")
-offer.set("id", "TEST-001")
-offer.set("available", "true")
+# ====================================
+# ТЕСТОВЫЕ ТОВАРЫ
+# (пока вместо Rossko)
+# ====================================
 
-ET.SubElement(offer, "name").text = "Тестовый товар"
-ET.SubElement(offer, "vendor").text = "AvtoShop66"
+products = [
+    {
+        "article": "2182-FOCMF",
+        "brand": "FEBEST",
+        "name": "Ступица колеса",
+        "price": 2500
+    },
+    {
+        "article": "HU7020Z",
+        "brand": "MANN",
+        "name": "Масляный фильтр",
+        "price": 1200
+    },
+    {
+        "article": "0986AF1111",
+        "brand": "BOSCH",
+        "name": "Тормозные колодки",
+        "price": 3200
+    }
+]
 
-ET.SubElement(offer, "currencyId").text = "RUR"
-ET.SubElement(offer, "categoryId").text = "1"
-base_price = random.randint(1500, 25000)
+for item in products:
 
-final_price = int(base_price * 5)
+    # Наценка +400%
+    final_price = int(item["price"] * MARKUP)
 
-ET.SubElement(
-    offer,
-    "price"
-).text = str(final_price)
-ET.SubElement(offer, "description").text = "Тестовая выгрузка"
+    offer = ET.SubElement(offers, "offer")
+
+    offer.set("id", item["article"])
+    offer.set("available", "true")
+
+    ET.SubElement(
+        offer,
+        "name"
+    ).text = f'{item["brand"]} {item["name"]}'
+
+    ET.SubElement(
+        offer,
+        "vendor"
+    ).text = item["brand"]
+
+    ET.SubElement(
+        offer,
+        "price"
+    ).text = str(final_price)
+
+    ET.SubElement(
+        offer,
+        "currencyId"
+    ).text = "RUR"
+
+    ET.SubElement(
+        offer,
+        "categoryId"
+    ).text = "1"
+
+    ET.SubElement(
+        offer,
+        "description"
+    ).text = (
+        f'{item["brand"]} '
+        f'{item["name"]}. '
+        f'Оригинальная автозапчасть.'
+    )
 
 tree = ET.ElementTree(root)
 
@@ -57,3 +139,4 @@ tree.write(
 )
 
 print("feed.yml generated")
+```
