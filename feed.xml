@@ -1,27 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<yml_catalog date="2026-05-26 12:00">
-  <shop>
-    <name>AvtoShop66</name>
-    <company>AvtoShop66</company>
-    <url>https://automotix.ru</url>
+<rss version="2.0"
+xmlns:g="http://base.google.com/ns/1.0">
 
-    <currencies>
-      <currency id="RUR" rate="1"/>
-    </currencies>
+<channel>
 
-    <categories>
-      <category id="1">Автозапчасти</category>
-    </categories>
+<title>AvtoShop66</title>
+<link>https://automotix.ru</link>
+<description>Автозапчасти</description>
 
-    <offers>
-      <offer id="TEST-001" available="true">
-        <name>FEBEST Ступица колеса</name>
-        <vendor>FEBEST</vendor>
-        <price>12500</price>
-        <currencyId>RUR</currencyId>
-        <categoryId>1</categoryId>
-        <description>Тестовый товар</description>
-      </offer>
-    </offers>
-  </shop>
-</yml_catalog>
+<item>
+
+<g:id>TEST-001</g:id>
+
+<g:title>FEBEST Ступица колеса</g:title>
+
+<g:description>
+Передняя ступица колеса FEBEST
+</g:description>
+
+<g:link>
+https://automotix.ru
+</g:link>
+
+<g:image_link>
+https://upload.wikimedia.org/wikipedia/commons/3/3f/Placeholder_view_vector.svg
+</g:image_link>
+
+<g:availability>
+in_stock
+</g:availability>
+
+<g:price>
+12500 RUB
+</g:price>
+
+<g:condition>
+new
+</g:condition>
+
+<g:brand>
+FEBEST
+</g:brand>
+
+<g:mpn>
+2182-FOCMF
+</g:mpn>
+
+</item>
+
+</channel>
+</rss>
