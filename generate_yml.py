@@ -115,4 +115,4 @@ tree.write(
     method="xml"
 )
 
-print("feed.yml generated")
+print("feed.xml generated")
